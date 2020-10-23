@@ -22,7 +22,9 @@ cordova.addConstructor(function () {
     console.log('BackgroundCalled');
   });
   screenshot.registerListener(function(me) {
-    console.log('received listener:',me);
+    console.log('received listener:');
+    console.log(me);
+    
     if(me === "background") {
       var event = new Event('onGoingBackground');
       document.dispatchEvent(event);
