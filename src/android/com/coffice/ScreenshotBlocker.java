@@ -25,8 +25,10 @@ public class ScreenshotBlocker extends CordovaPlugin{
     static CordovaWebView cordovaWebView;
     static CordovaInterface cordovaInterface;
     private Context context = null;
+    
+    protected final static String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
-   private ScreenShotContentObserver screenShotContentObserver;
+    private ScreenShotContentObserver screenShotContentObserver;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -39,6 +41,11 @@ public class ScreenshotBlocker extends CordovaPlugin{
         cordovaInterface = cordova;
 
         //setContentView(R.layout.activity_main);
+        
+        //Check read permisisons to be able to locate screenshots.
+        if(!PermissionHelper.hasPermission(this, PERMISSIONS[0])) {
+            PermissionHelper.requestPermissions(this, 0, PERMISSIONS);
+        }
 
         HandlerThread handlerThread = new HandlerThread("content_observer");
         handlerThread.start();
