@@ -29,6 +29,7 @@
         </config-file>
 
         <source-file src="src/android/com/coffice/ScreenshotBlocker.java" target-dir="src/com/coffice"/>
+        <source-file src="src/android/com/coffice/ScreenShotContentObserver.java" target-dir="src/com/coffice"/>
     </platform>
 
     <platform name="ios">
