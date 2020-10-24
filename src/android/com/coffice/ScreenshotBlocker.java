@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Message;
 import android.content.Context;
+import android.util.Log;
 
 
 import org.apache.cordova.*;
