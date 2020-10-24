@@ -23,6 +23,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
     static ScreenshotBlocker instance = null;
     static CordovaWebView cordovaWebView;
     static CordovaInterface cordovaInterface;
+    private Context context = null;
 
    private ScreenShotContentObserver screenShotContentObserver;
 
@@ -47,7 +48,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
             }
         };
 
-        screenShotContentObserver = new ScreenShotContentObserver(handler, activity.getApplicationContext()) {
+        screenShotContentObserver = new ScreenShotContentObserver(handler,this.cordova.getActivity().getApplicationContext()) {
             @Override
             protected void onScreenShot(String path, String fileName) {
                 //File file = new File(path); //this is the file of screenshot image
@@ -107,7 +108,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
 
-        getContentResolver().registerContentObserver(
+           this.cordova.getActivity().getApplicationContext().getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 true,
                 screenShotContentObserver
@@ -119,7 +120,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
         super.onPause(multitasking);
 
         try {
-            getContentResolver().unregisterContentObserver(screenShotContentObserver);
+            this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +131,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
         super.onDestroy();
         instance = null;
         try {
-            getContentResolver().unregisterContentObserver(screenShotContentObserver);
+            this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
         } catch (Exception e) {
             e.printStackTrace();
         }
