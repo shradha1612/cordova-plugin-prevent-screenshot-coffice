@@ -4,6 +4,7 @@ import android.database.ContentObserver;
 import android.content.Context;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.net.Uri;
 
 import java.io.File;
 import java.lang.System;
