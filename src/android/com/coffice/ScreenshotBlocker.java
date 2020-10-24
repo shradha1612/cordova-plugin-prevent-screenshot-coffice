@@ -6,6 +6,7 @@ import android.os.HandlerThread;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Message;
+import android.content.Context;
 
 
 import org.apache.cordova.*;
@@ -46,7 +47,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
             }
         };
 
-        screenShotContentObserver = new ScreenShotContentObserver(handler, this) {
+        screenShotContentObserver = new ScreenShotContentObserver(handler, activity.getApplicationContext()) {
             @Override
             protected void onScreenShot(String path, String fileName) {
                 //File file = new File(path); //this is the file of screenshot image
