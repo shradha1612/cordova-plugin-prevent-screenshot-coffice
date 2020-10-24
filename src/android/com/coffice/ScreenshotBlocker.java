@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Message;
 import android.content.Context;
-import android.util.Log;
 
 
 import org.apache.cordova.*;
@@ -73,6 +72,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
                             mContext.cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                         }
                         callbackContext.success("Success");
+                        triggerJavascriptEvent("TestScreenshotEvent");
                     }catch(Exception e){
                         callbackContext.error(e.toString());
                     }
