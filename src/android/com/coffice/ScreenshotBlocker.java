@@ -2,7 +2,6 @@ package com.coffice;
 
 import android.app.Activity;
 import android.view.WindowManager;
-import android.os.Bundle;
 import android.os.HandlerThread;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -23,6 +22,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
     static CordovaWebView cordovaWebView;
     static CordovaInterface cordovaInterface;
 
+   private ScreenShotContentObserver screenShotContentObserver;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -33,6 +33,27 @@ public class ScreenshotBlocker extends CordovaPlugin{
         instance = this;
         cordovaWebView = webView;
         cordovaInterface = cordova;
+
+        //setContentView(R.layout.activity_main);
+
+        HandlerThread handlerThread = new HandlerThread("content_observer");
+        handlerThread.start();
+        final Handler handler = new Handler(handlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+
+        screenShotContentObserver = new ScreenShotContentObserver(handler, this) {
+            @Override
+            protected void onScreenShot(String path, String fileName) {
+                //File file = new File(path); //this is the file of screenshot image
+                triggerJavascriptEvent("onTookScreenshot");
+            }
+        };
+
+
     }
 
     @Override
@@ -80,32 +101,6 @@ public class ScreenshotBlocker extends CordovaPlugin{
     }
     
     
-    private ScreenShotContentObserver screenShotContentObserver;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        HandlerThread handlerThread = new HandlerThread("content_observer");
-        handlerThread.start();
-        final Handler handler = new Handler(handlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-            }
-        };
-
-        screenShotContentObserver = new ScreenShotContentObserver(handler, this) {
-            @Override
-            protected void onScreenShot(String path, String fileName) {
-                //File file = new File(path); //this is the file of screenshot image
-                triggerJavascriptEvent("onTookScreenshot");
-            }
-        };
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
