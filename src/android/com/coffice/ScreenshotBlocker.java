@@ -152,8 +152,6 @@ public class ScreenshotBlocker extends CordovaPlugin{
 
 }
 
-}
-
 
 
 //Got from https://stackoverflow.com/questions/31360296/listen-for-screenshot-action-in-android it shows how to listen for screenshot event
