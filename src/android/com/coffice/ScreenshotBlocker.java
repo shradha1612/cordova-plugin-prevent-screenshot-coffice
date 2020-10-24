@@ -2,10 +2,18 @@ package com.coffice;
 
 import android.app.Activity;
 import android.view.WindowManager;
+import android.os.Bundle;
+import android.os.HandlerThread;
+import android.os.Handler;
+import android.provider.MediaStore;
+
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.lang.Exception;
+import java.lang.Runnable;
 
 public class ScreenshotBlocker extends CordovaPlugin{
     private com.coffice.ScreenshotBlocker mContext;
