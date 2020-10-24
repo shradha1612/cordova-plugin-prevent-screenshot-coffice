@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.os.Message;
 import android.content.Context;
 import android.util.Log;
+import android.Manifest;
 
 
 import org.apache.cordova.*;
