@@ -1,3 +1,5 @@
+package com.coffice;
+
 public abstract class ScreenShotContentObserver extends ContentObserver {
 //Got from https://stackoverflow.com/questions/31360296/listen-for-screenshot-action-in-android it shows how to listen for screenshot event
 
