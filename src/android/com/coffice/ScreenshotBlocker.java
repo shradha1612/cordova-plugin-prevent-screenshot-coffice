@@ -5,6 +5,7 @@ import android.view.WindowManager;
 import android.os.HandlerThread;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.os.Message;
 
 
 import org.apache.cordova.*;
