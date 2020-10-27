@@ -7,7 +7,10 @@ var screenshot = {
   },
   registerListener : function(callback) {
     cordova.exec(callback, callback, 'screenshotName', 'listen', []);
+  },
 
+  activateDetectAndroid : function(callback) {
+    cordova.exec(callback, callback, 'screenshotName', 'activateDetect', []);
   }
 }
 
