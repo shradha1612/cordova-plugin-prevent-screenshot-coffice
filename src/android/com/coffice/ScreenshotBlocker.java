@@ -107,7 +107,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
                             }
                         };
 
-                        screenShotContentObserver = new ScreenShotContentObserver(handler,this.cordova.getActivity().getApplicationContext()) {
+                        screenShotContentObserver = new ScreenShotContentObserver(handler,instance.cordova.getActivity().getApplicationContext()) {
                             @Override
                             protected void onScreenShot(String path, String fileName) {
                                 //File file = new File(path); //this is the file of screenshot image
