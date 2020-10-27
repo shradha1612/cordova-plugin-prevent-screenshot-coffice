@@ -31,7 +31,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
 
     private ScreenShotContentObserver screenShotContentObserver;
 
-    private useDetectSS = false;
+    private boolean useDetectSS = false;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
