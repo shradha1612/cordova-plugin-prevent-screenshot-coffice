@@ -61,7 +61,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
                             mContext.cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                         }
                         callbackContext.success("Success");
-                        triggerJavascriptEvent("TestScreenshotEvent");
+                        //triggerJavascriptEvent("TestScreenshotEvent");
                     }catch(Exception e){
                         callbackContext.error(e.toString());
                     }
