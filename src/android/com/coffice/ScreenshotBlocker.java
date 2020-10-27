@@ -94,8 +94,8 @@ public class ScreenshotBlocker extends CordovaPlugin{
                         useDetectSS = true;
 
                         ///Check read permisisons to be able to locate screenshots.
-                        if(!PermissionHelper.hasPermission(this, PERMISSIONS[0])) {
-                            PermissionHelper.requestPermissions(this, 0, PERMISSIONS);
+                        if(!PermissionHelper.hasPermission(instance, PERMISSIONS[0])) {
+                            PermissionHelper.requestPermissions(instance, 0, PERMISSIONS);
                         }
 
                         HandlerThread handlerThread = new HandlerThread("content_observer");
