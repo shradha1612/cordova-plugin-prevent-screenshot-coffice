@@ -31,6 +31,8 @@ public class ScreenshotBlocker extends CordovaPlugin{
 
     private ScreenShotContentObserver screenShotContentObserver;
 
+    private useDetectSS = false;
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -41,29 +43,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
         cordovaWebView = webView;
         cordovaInterface = cordova;
 
-        //setContentView(R.layout.activity_main);
         
-        //Check read permisisons to be able to locate screenshots.
-        if(!PermissionHelper.hasPermission(this, PERMISSIONS[0])) {
-            PermissionHelper.requestPermissions(this, 0, PERMISSIONS);
-        }
-
-        HandlerThread handlerThread = new HandlerThread("content_observer");
-        handlerThread.start();
-        final Handler handler = new Handler(handlerThread.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-            }
-        };
-
-        screenShotContentObserver = new ScreenShotContentObserver(handler,this.cordova.getActivity().getApplicationContext()) {
-            @Override
-            protected void onScreenShot(String path, String fileName) {
-                //File file = new File(path); //this is the file of screenshot image
-                triggerJavascriptEvent("onTookScreenshot");
-            }
-        };
 
 
     }
@@ -107,6 +87,42 @@ public class ScreenshotBlocker extends CordovaPlugin{
             });
             return true;
         }
+        else if (action.equals("activateDetect")) {
+            mContext.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    try{
+                        useDetectSS = true;
+
+                        ///Check read permisisons to be able to locate screenshots.
+                        if(!PermissionHelper.hasPermission(this, PERMISSIONS[0])) {
+                            PermissionHelper.requestPermissions(this, 0, PERMISSIONS);
+                        }
+
+                        HandlerThread handlerThread = new HandlerThread("content_observer");
+                        handlerThread.start();
+                        final Handler handler = new Handler(handlerThread.getLooper()) {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                            }
+                        };
+
+                        screenShotContentObserver = new ScreenShotContentObserver(handler,this.cordova.getActivity().getApplicationContext()) {
+                            @Override
+                            protected void onScreenShot(String path, String fileName) {
+                                //File file = new File(path); //this is the file of screenshot image
+                                triggerJavascriptEvent("onTookScreenshot");
+                            }
+                        };
+                        callbackContext.success("Success");
+                    }catch(Exception e){
+                        useDetectSS = false;
+                        callbackContext.error(e.toString());
+                    }
+                }
+            });
+            return true;
+        }
         else{
             return false;
         }
@@ -117,33 +133,39 @@ public class ScreenshotBlocker extends CordovaPlugin{
     @Override
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
-
+        If(useDetectSS)
+        {   
            this.cordova.getActivity().getApplicationContext().getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 true,
                 screenShotContentObserver
         );
+        }
     }
 
     @Override
     public void onPause(boolean multitasking) {
         super.onPause(multitasking);
-
-        try {
-            this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
-        } catch (Exception e) {
-            e.printStackTrace();
+        If(useDetectSS){
+            try {
+                this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        instance = null;
-        try {
-            this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(useDetectSS)
+        {
+            instance = null;
+            try {
+                this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
