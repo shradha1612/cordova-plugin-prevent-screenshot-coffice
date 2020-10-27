@@ -4,8 +4,12 @@ This is a cordova plugin to enable/disable screenshots in android and ios
 
 ## Supported Platforms
 
-- Android API all versions
-- IOS all versions
+- Android API all versions('Detect and prevent' screenshot functionality)*
+- IOS all versions (Only 'detect screenshot' functionality)
+
+*For android the detect functionality is based on an Observer that keeps checking if a file with name 'Screenshot' was created while the app was opened.
+It was taken from https://stackoverflow.com/questions/31360296/listen-for-screenshot-action-in-android
+And was the only option I found, personally I didn't liked
 
 ## Installation
 
@@ -44,6 +48,23 @@ document.addEventListener("onTookScreenshot",function(){
 document.addEventListener("onGoingBackground",function(){
 // Receive notification when control center or app going in background.
 });
+
+
+
+//Activate Detect functionality for android
+function EnableDetect() {
+  window.plugins.preventscreenshot.activateDetectAndroid(successActivateCallback, errorActivateCallback);
+}
+
+function successActivateCallback(result) {
+  console.log(result); // true activate - enabled
+}
+
+function errorActivateCallback(error) {
+  console.log(error);
+}
+
+EnableDetect();
 
 ```
 
