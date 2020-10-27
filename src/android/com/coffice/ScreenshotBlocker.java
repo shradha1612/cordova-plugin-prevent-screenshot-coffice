@@ -133,7 +133,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
     @Override
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
-        If(useDetectSS)
+        if(useDetectSS)
         {   
            this.cordova.getActivity().getApplicationContext().getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -146,7 +146,7 @@ public class ScreenshotBlocker extends CordovaPlugin{
     @Override
     public void onPause(boolean multitasking) {
         super.onPause(multitasking);
-        If(useDetectSS){
+        if(useDetectSS){
             try {
                 this.cordova.getActivity().getApplicationContext().getContentResolver().unregisterContentObserver(screenShotContentObserver);
             } catch (Exception e) {
