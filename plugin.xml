@@ -30,7 +30,7 @@
 
 	<config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-		 <activity android:LaunchMode="singleInstance" android:taskAffinity=""/>
+		 <activity android:LaunchMode="singleInstance"/>
         </config-file>
 	    
 	
