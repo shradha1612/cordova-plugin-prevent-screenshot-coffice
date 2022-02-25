@@ -30,13 +30,10 @@
 
 	<config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+		 <activity android:LaunchMode="singleInstance" android:taskAffinity=""/>
         </config-file>
 	    
-	<config-file target="AndroidManifest.xml">
-            <activity android:LaunchMode="singleInstance" android:taskAffinity=""/>
-        </config-file>
-            
-            
+	
         <source-file src="src/android/com/coffice/ScreenshotBlocker.java" target-dir="src/com/coffice"/>
         <source-file src="src/android/com/coffice/ScreenShotContentObserver.java" target-dir="src/com/coffice"/>
 	    <source-file src="src/android/com/coffice/PermissionHelper.java" target-dir="src/com/coffice"/>
