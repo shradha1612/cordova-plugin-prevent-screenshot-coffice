@@ -33,7 +33,7 @@
         </config-file>
 	    
 	<config-file target="AndroidManifest.xml">
-            <uses-permission android:LaunchMode="singleInstance" android:taskAffinity=""/>
+            <activity android:LaunchMode="singleInstance" android:taskAffinity=""/>
         </config-file>
             
             
